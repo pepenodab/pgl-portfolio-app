@@ -1,38 +1,42 @@
 import { useState } from "react";
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-} from "react-native";
+import { StyleSheet, Text, View, ImageBackground } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import Header from "./components/Header";
 import Card from "./components/Card";
 import ListILike from "./components/ListOfLikes";
 import ViewHelp from "./components/ViewHelp";
 import likes from "./data/likes";
+import { COLOR_BRIGHT, COLORS_DARK } from "./styles/colors";
 
 export default function App() {
   const [questionMark, setQuestionMark] = useState(false);
   const [displayMyQR, setDisplayMyQR] = useState(true);
+
   const [isDark, setIsDark] = useState(true);
 
   return (
     <View style={styles.container}>
-      <View style={styles.topContainer}>
+      <View
+        style={isDark ? styles.topContainer_dark : styles.topContainer_bright}
+      >
         <Header
           setDisplayMyQR={setDisplayMyQR}
           setQuestionMark={setQuestionMark}
+          setIsDark={setIsDark}
+          isDark={isDark}
         ></Header>
       </View>
       <ImageBackground
-        source={require("./assets/backgroundApp.jpg")}
+        source={
+          isDark
+            ? require("./assets/backgroundApp.jpg")
+            : require("./assets/backgroundApp2.jpg")
+        }
         resizeMode="cover"
         style={styles.backgroundImage}
       >
         {questionMark ? (
-          <ViewHelp></ViewHelp>
+          <ViewHelp isDark={isDark} />
         ) : displayMyQR ? (
           <View style={styles.bodyContainer}>
             <View style={styles.cardContainer}>
@@ -40,10 +44,13 @@ export default function App() {
                 description={
                   "Soy un alumno de dam y me gusta mucho la programación, aunque mi ex-tutor no"
                 }
+                isDark={isDark}
               ></Card>
             </View>
-            <Text style={styles.title}>Cosas que me gustan mucho:</Text>
-            <ListILike lista={likes}></ListILike>
+            <Text style={isDark ? styles.title_dark : styles.title_bright}>
+              Cosas que me gustan mucho:
+            </Text>
+            <ListILike lista={likes} isDark={isDark}></ListILike>
           </View>
         ) : (
           <View style={styles.bodyContainer}>
@@ -60,14 +67,22 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
   },
-  topContainer: {
+  topContainer_dark: {
     height: "15%",
     width: "100%",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(34, 34, 34, 0.9)",
+    backgroundColor: COLORS_DARK.primary,
+    paddingTop: 40,
+  },
+  topContainer_bright: {
+    height: "15%",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: COLOR_BRIGHT.primary,
+    color: COLOR_BRIGHT.title,
     paddingTop: 40,
   },
   backgroundImage: {
@@ -89,8 +104,29 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 10,
   },
-  title: {
-    color: "#FFF",
+  title_dark: {
+    color: COLORS_DARK.title,
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowRadius: 10,
+    fontWeight: "600",
+    textTransform: "capitalize",
+    fontSize: 20,
+    textAlign: "center",
+    marginVertical: 10,
+    backgroundColor: COLORS_DARK.primary,
+    borderRadius: 10,
+    margin: 20,
+    borderWidth: 2,
+    borderColor: "#FF4C4C",
+    shadowColor: "#000",
+    shadowOpacity: 0.3,
+    elevation: 10,
+    width: "95%",
+    height: "5%",
+    paddingTop: "1%",
+  },
+  title_bright: {
+    color: COLOR_BRIGHT.title,
     textShadowColor: "rgba(0, 0, 0, 0.75)",
     textShadowRadius: 10,
     fontWeight: "600",
@@ -102,7 +138,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 20,
     borderWidth: 2,
-    borderColor: "#FF4C4C",
+    borderColor: COLOR_BRIGHT.secundary,
     shadowColor: "#000",
     shadowOpacity: 0.3,
     elevation: 10,
@@ -115,17 +151,5 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     height: "100%",
-  },
-  cosasQmeGustanMuxoEstails: {
-    borderColor: "black",
-    borderWidth: 1,
-    borderStyle: "dashed",
-    padding: 20,
-    color: "darkred",
-    textAlign: "center",
-    fontWeight: "bold",
-    fontStyle: "italic",
-    fontSize: 16,
-    backgroundColor: "silver",
   },
 });
