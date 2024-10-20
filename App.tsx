@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     marginVertical: 10,
-    backgroundColor: "rgba(34, 34, 34, 0.85)",
+    backgroundColor: COLOR_BRIGHT.primary,
     borderRadius: 10,
     margin: 20,
     borderWidth: 2,
