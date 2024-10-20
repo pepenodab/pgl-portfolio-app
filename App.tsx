@@ -127,8 +127,6 @@ const styles = StyleSheet.create({
   },
   title_bright: {
     color: COLOR_BRIGHT.title,
-    textShadowColor: "rgba(0, 0, 0, 0.75)",
-    textShadowRadius: 10,
     fontWeight: "600",
     textTransform: "capitalize",
     fontSize: 20,
@@ -139,8 +137,7 @@ const styles = StyleSheet.create({
     margin: 20,
     borderWidth: 2,
     borderColor: COLOR_BRIGHT.secundary,
-    shadowColor: "#000",
-    shadowOpacity: 0.3,
+
     elevation: 10,
     width: "95%",
     height: "5%",
